@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://20.249.148.67:8000';
+const API_BASE_URL = import.meta.env.PROD ? '' : 'http://20.249.148.67:8000';
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
