@@ -1,4 +1,5 @@
-const API_BASE_URL = 'http://20.249.148.67:8000';
+const API_BASE_URL = '/api';
+const V1_BASE_URL = '/v1';
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
   const controller = new AbortController();
@@ -59,14 +60,14 @@ export async function fetchLogs(source = 'fwknop', lines = 50) {
 }
 
 export async function fetchTransactionStatus() {
-  const res = await fetchWithTimeout(`${API_BASE_URL}/v1/status`, {}, 5000);
+  const res = await fetchWithTimeout(`${V1_BASE_URL}/status`, {}, 5000);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return await res.json();
 }
 
 export async function postTransaction(amount, recipient) {
   const res = await fetchWithTimeout(
-    `${API_BASE_URL}/v1/transaction`,
+    `${V1_BASE_URL}/transaction`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
