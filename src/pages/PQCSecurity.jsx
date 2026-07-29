@@ -7,7 +7,6 @@ export default function PQCStatus() {
   const [pqcData, setPqcData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [rekeyElapsed, setRekeyElapsed] = useState(0);
 
   const loadPQC = async () => {
     try {
@@ -23,8 +22,6 @@ export default function PQCStatus() {
 
   useEffect(() => {
     loadPQC();
-    const interval = setInterval(() => setRekeyElapsed((s) => s + 1), 1000);
-    return () => clearInterval(interval);
   }, []);
 
   const comparisonTable = [
@@ -125,60 +122,6 @@ export default function PQCStatus() {
           </div>
         </div>
       )}
-
-      {pqcData && (() => {
-        const rekeyInterval = pqcData.rekey_interval_seconds || 120;
-        const remaining = Math.max(0, rekeyInterval - rekeyElapsed);
-        const progress = Math.min(100, (rekeyElapsed / rekeyInterval) * 100);
-        return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-card/80 border border-border rounded-2xl p-5 shadow-xl space-y-4">
-              <div className="flex items-center justify-between border-b border-border pb-2">
-                <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Security Level</p>
-                <span className="text-[10px] font-mono bg-emerald-950/60 border border-emerald-700/60 text-emerald-400 px-2 py-0.5 rounded">Category 5</span>
-              </div>
-              <div className="space-y-2 pt-1">
-                {[1, 2, 3, 4, 5].map((cat) => {
-                  const isActive = cat === 5;
-                  const bits = cat * 64 + 128;
-                  return (
-                    <div key={cat} className={`flex items-center gap-3 p-2 rounded-lg transition-all ${isActive ? 'bg-emerald-950/40 border border-emerald-700/40' : 'opacity-40'}`}>
-                      <div className={`w-2 h-8 rounded-full ${isActive ? 'bg-emerald-400' : 'bg-foreground/20'}`} />
-                      <span className={`w-20 text-xs font-mono ${isActive ? 'text-emerald-300 font-bold' : 'text-muted-foreground'}`}>Cat {cat}</span>
-                      <div className="flex-1 h-2 rounded-full bg-background/60 overflow-hidden">
-                        <div className={`h-full rounded-full transition-all duration-500 ${isActive ? 'bg-gradient-to-r from-emerald-500 to-emerald-400' : 'bg-foreground/10'}`} style={{ width: `${(cat / 5) * 100}%` }} />
-                      </div>
-                      <span className={`text-[10px] font-mono w-28 text-right ${isActive ? 'text-emerald-300/80' : 'text-muted-foreground'}`}>{bits}-bit classical / {cat * 64}-bit quantum</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="bg-card/80 border border-border rounded-2xl p-5 shadow-xl space-y-4">
-              <div className="flex items-center justify-between border-b border-border pb-2">
-                <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Key Rotation</p>
-                <span className="text-[10px] font-mono bg-card text-foreground/80 px-2 py-0.5 rounded border border-border">{remaining}s remaining</span>
-              </div>
-              <div className="pt-2 space-y-3">
-                <div className="bg-background/60 rounded-full h-3 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-400 transition-all duration-1000"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <div className="flex justify-between text-[11px] font-mono text-muted-foreground">
-                  <span>Last rotation: {rekeyElapsed}s ago</span>
-                  <span>Next rotation: in {remaining}s</span>
-                </div>
-                <div className="bg-background/60 border border-border rounded-xl p-3 text-xs font-mono text-foreground/80 leading-relaxed">
-                  ML-KEM-1024 supports &nbsp;<span className="text-emerald-400">Perfect Forward Secrecy</span> — each rekey derives a fresh shared secret so past session keys cannot be recovered even if the long-term private key is compromised.
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })()}
 
       {/* Cryptographic Quantum Resistance Comparison Table */}
       <div className="bg-card/80 border border-border rounded-2xl p-6 shadow-xl space-y-4">
