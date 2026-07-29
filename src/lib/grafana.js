@@ -1,5 +1,5 @@
 export const GRAFANA_URL =
-  import.meta.env.PROD ? '/grafana' : (import.meta.env.VITE_GRAFANA_URL ?? 'http://20.249.148.67:3000');
+  import.meta.env.VITE_GRAFANA_URL || (import.meta.env.PROD ? '/grafana' : 'http://20.249.148.67:3000');
 
 export const GRAFANA_PANELS = [
   {
