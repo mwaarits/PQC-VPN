@@ -15,15 +15,15 @@ Nmap scan report for 20.249.148.67
 Host is up (0.037s latency).
 
 PORT      STATE         SERVICE
-51820/udp open|filtered openvpn
+51820/udp open|filtered -
 
-# nmap -sU -p 5100-5200 20.249.148.67
+# nmap -sU -p 51000-52000 20.249.148.67
 Starting Nmap 7.95 ( https://nmap.org ) at 2026-07-29 14:01 UTC
 Nmap scan report for 20.249.148.67
 Host is up (0.039s latency).
 
-All 101 scanned ports on 20.249.148.67 are in ignored states.
-Not shown: 101 open|filtered udp ports (no-response)`);
+All 1001 scanned ports on 20.249.148.67 are in ignored states.
+Not shown: 1001 open|filtered udp ports (no-response)`);
 
   const loadDarkNetwork = async () => {
     try {

@@ -7,7 +7,6 @@ const navItems = [
   { id: 'dark-network', label: 'Dark Network' },
   { id: 'benchmark', label: 'Benchmark' },
   { id: 'logs', label: 'Logs & Monitoring' },
-  { id: 'transaction', label: 'Transaction Demo' },
   { id: 'add-client', label: 'Add New Client' },
 ];
 

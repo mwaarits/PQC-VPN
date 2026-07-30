@@ -6,7 +6,7 @@ export default function Benchmark() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [standard, setStandard] = useState({
+  const [standard] = useState({
     latency_ms: 0.037,
     throughput_mbps: 940,
     loss_pct: 0.17,
@@ -115,95 +115,58 @@ export default function Benchmark() {
             </div>
           </details>
 
-          <div className="bg-card/80 border border-border rounded-2xl p-6 shadow-xl space-y-4">
+          <div className="bg-card/80 border border-border rounded-2xl p-6 shadow-xl">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <h3 className="text-base font-bold text-foreground">
                 Data Breakdown
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-background/80 border border-border rounded-xl p-5 space-y-4">
-                <div className="flex items-center justify-between border-b border-border pb-2">
-                  <span className="text-sm font-bold text-foreground font-mono">PQC-VPN Enforced Network</span>
-                  <span className="text-[10px] font-mono bg-card text-foreground/80 px-2 py-0.5 rounded border border-border">
-                    TESTED
-                  </span>
-                </div>
-                <div className="space-y-3 font-mono text-xs">
-                  <div className="flex justify-between py-1.5 border-b border-border text-foreground/80">
-                    <span className="text-muted-foreground">Latency:</span>
-                    <span className="font-bold text-foreground">{data.pqc_latency_ms} ms</span>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="bg-background/80 border border-border rounded-xl p-5">
+                <div className="text-sm font-bold text-foreground font-mono mb-4">PQC Tunnels</div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center border-b border-border/40 pb-2">
+                    <span className="text-sm font-mono text-muted-foreground">Latency</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{data.pqc_latency_ms ?? 'N/A'} <span className="text-muted-foreground/60 text-xs font-normal">ms</span></span>
                   </div>
-                  <div className="flex justify-between py-1.5 border-b border-border text-foreground/80">
-                    <span className="text-muted-foreground">Throughput:</span>
-                    <span className="font-bold text-foreground">{data.pqc_throughput_mbps} Mbps</span>
+                  <div className="flex justify-between items-center border-b border-border/40 pb-2">
+                    <span className="text-sm font-mono text-muted-foreground">Throughput</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{data.pqc_throughput_mbps ?? 'N/A'} <span className="text-muted-foreground/60 text-xs font-normal">Mbps</span></span>
                   </div>
-                  <div className="flex justify-between py-1.5 border-b border-border text-foreground/80">
-                    <span className="text-muted-foreground">Packet Loss:</span>
-                    <span className="font-bold text-emerald-400">{data.packet_loss_pct}%</span>
+                  <div className="flex justify-between items-center border-b border-border/40 pb-2">
+                    <span className="text-sm font-mono text-muted-foreground">Packet Loss</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{data.packet_loss_pct ?? '0'} <span className="text-muted-foreground/60 text-xs font-normal">%</span></span>
                   </div>
-                  <div className="flex justify-between py-1.5 text-foreground/80">
-                    <span className="text-muted-foreground">Concurrent Streams:</span>
-                    <span className="font-bold text-foreground">{data.concurrent_connections}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-mono text-muted-foreground">Streams</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{data.concurrent_connections ?? 'N/A'}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-background/80 border border-border rounded-xl p-5 space-y-4">
-                <div className="flex items-center justify-between border-b border-border pb-2">
-                  <span className="text-sm font-bold text-foreground font-mono">
-                    Standard WireGuard Baseline
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono bg-card text-foreground/80 px-2 py-0.5 rounded border border-border">
-                      TESTED
-                    </span>
+              <div className="bg-background/80 border border-border rounded-xl p-5">
+                <div className="text-sm font-bold text-foreground font-mono mb-4">Standard WG Baseline</div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center border-b border-border/40 pb-2">
+                    <span className="text-sm font-mono text-muted-foreground">Latency</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{standard.latency_ms} <span className="text-muted-foreground/60 text-xs font-normal">ms</span></span>
                   </div>
-                </div>
-                <div className="space-y-3 font-mono text-xs text-foreground/80">
-                  <div className="flex justify-between py-1.5 border-b border-border">
-                    <span className="text-muted-foreground">Latency:</span>
-                    <span className="font-bold text-foreground">{standard.latency_ms} ms</span>
+                  <div className="flex justify-between items-center border-b border-border/40 pb-2">
+                    <span className="text-sm font-mono text-muted-foreground">Throughput</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{standard.throughput_mbps} <span className="text-muted-foreground/60 text-xs font-normal">Mbps</span></span>
                   </div>
-                  <div className="flex justify-between py-1.5 border-b border-border">
-                    <span className="text-muted-foreground">Throughput:</span>
-                    <span className="font-bold text-foreground">{standard.throughput_mbps} Mbps</span>
+                  <div className="flex justify-between items-center border-b border-border/40 pb-2">
+                    <span className="text-sm font-mono text-muted-foreground">Packet Loss</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{standard.loss_pct} <span className="text-muted-foreground/60 text-xs font-normal">%</span></span>
                   </div>
-                  <div className="flex justify-between py-1.5 border-b border-border">
-                    <span className="text-muted-foreground">Packet Loss:</span>
-                    <span className="font-bold text-foreground">{standard.loss_pct}%</span>
-                  </div>
-                  <div className="flex justify-between py-1.5">
-                    <span className="text-muted-foreground">Concurrent Streams:</span>
-                    <span className="font-bold text-foreground">{standard.connections}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-mono text-muted-foreground">Streams</span>
+                    <span className="text-base font-mono font-semibold text-foreground tabular-nums">{standard.connections}</span>
                   </div>
                 </div>
               </div>
             </div>
-
-            {(() => {
-              const lo = data.pqc_latency_ms != null
-                ? ((data.pqc_latency_ms - standard.latency_ms) / standard.latency_ms * 100).toFixed(1)
-                : null;
-              const to = data.pqc_throughput_mbps != null
-                ? ((standard.throughput_mbps - data.pqc_throughput_mbps) / standard.throughput_mbps * 100).toFixed(1)
-                : null;
-              return (
-                <div className="border-t border-border pt-4 mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-[11px] font-mono">
-                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3 text-foreground/90">
-                    <span className="text-muted-foreground">Latency Overhead </span>
-                    <span className="font-bold text-amber-400">{lo ? `+${lo}%` : 'N/A'}</span>
-                    <span className="text-muted-foreground/60 ml-1">(PQC is slower)</span>
-                  </div>
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-3 text-foreground/90">
-                    <span className="text-muted-foreground">Throughput Overhead </span>
-                    <span className="font-bold text-blue-400">{to ? `${to}%` : 'N/A'}</span>
-                    <span className="text-muted-foreground/60 ml-1">(throughput drops)</span>
-                  </div>
-                </div>
-              );
-            })()}
           </div>
         </>
       )}

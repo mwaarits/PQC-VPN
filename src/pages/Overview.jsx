@@ -72,7 +72,7 @@ export default function Overview() {
             </div>
 
             <div className="bg-card/70 border border-border rounded-2xl p-5 shadow-md">
-              <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Enforcement Status</p>
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">API Status</p>
               <h3 className="text-2xl font-bold mt-2 font-mono">
                 <span className={data.enforcement_status === 'ENFORCED' ? 'text-emerald-400' : 'text-amber-400'}>
                   {data.enforcement_status}
@@ -90,7 +90,7 @@ export default function Overview() {
             </div>
 
             <div className="bg-card/70 border border-border rounded-2xl p-5 shadow-md">
-              <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">fwknop Server</p>
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">fwknop Service</p>
               <h3 className="text-2xl font-bold text-emerald-400 mt-2 font-mono uppercase">
                 {data.fwknop_status || 'active'}
               </h3>
@@ -116,7 +116,6 @@ export default function Overview() {
                     <th className="py-3 px-4">Allowed IPs</th>
                     <th className="py-3 px-4">Latest Handshake</th>
                     <th className="py-3 px-4">Transfer Stats</th>
-                    <th className="py-3 px-4">Keepalive</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60 text-sm">
@@ -125,7 +124,7 @@ export default function Overview() {
                       <tr key={idx} className="hover:bg-muted/40 transition-colors">
                         <td className="py-3.5 px-4 font-mono text-xs">
                           <span className="bg-muted px-2 py-1 rounded inline-block text-foreground/80">
-                            {peer.public_key}
+                            {peer.public_key.length > 20 ? peer.public_key.slice(0, 20) + '...' : peer.public_key}
                           </span>
                         </td>
                         <td className="py-3.5 px-4 font-mono text-xs text-foreground">
@@ -140,19 +139,16 @@ export default function Overview() {
                           {peer.latest_handshake}
                         </td>
                         <td className="py-3.5 px-4 font-mono text-xs text-foreground/80">
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-6">
                             <span className="text-emerald-400">&#8595; {peer.transfer ? peer.transfer.split(',')[0] : 'N/A'}</span>
                             <span className="text-foreground/60">&#8593; {peer.transfer ? peer.transfer.split(',')[1] || '' : ''}</span>
                           </div>
-                        </td>
-                        <td className="py-3.5 px-4 font-mono text-xs text-muted-foreground">
-                          {peer.keepalive || 'every 25s'}
                         </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="6" className="py-8 text-center text-muted-foreground/80 font-mono text-sm">
+                      <td colSpan="5" className="py-8 text-center text-muted-foreground/80 font-mono text-sm">
                         No active peers connected.
                       </td>
                     </tr>

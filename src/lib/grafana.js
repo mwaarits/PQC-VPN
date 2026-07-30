@@ -8,10 +8,10 @@ export const GRAFANA_PANELS = [
     title: 'LTI Server',
     slug: 'lti-server',
     orgId: 1,
-    from: 'now-6h',
+    from: 'now-15m',
     to: 'now',
     timezone: 'browser',
-    refresh: '5s',
+    refresh: '2s',
   },
 ];
 

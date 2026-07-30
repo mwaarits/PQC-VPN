@@ -91,7 +91,7 @@ export default function PQCStatus() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Card 1: Engine Status */}
           <div className="bg-card/80 border border-border rounded-2xl p-5 shadow-lg">
-            <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Engine Status</p>
+            <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">PQC Status</p>
             <h3 className="text-2xl font-bold text-emerald-400 mt-2 font-mono">
               {pqcData.status || 'ACTIVE'}
             </h3>
@@ -115,7 +115,7 @@ export default function PQCStatus() {
 
           {/* Card 4: Rekey Interval */}
           <div className="bg-card/80 border border-border rounded-2xl p-5 shadow-lg">
-            <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">PFS Rekey</p>
+            <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Key Rotation</p>
             <h3 className="text-2xl font-bold text-foreground mt-2 font-mono">
               {pqcData.rekey_interval_seconds ? `${pqcData.rekey_interval_seconds}s` : '120s'}
             </h3>

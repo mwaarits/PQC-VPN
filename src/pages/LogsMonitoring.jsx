@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { fetchLogs } from '../api';
 import ErrorAlert from '../components/ErrorAlert';
 import { Terminal, RefreshCw } from 'lucide-react';
 import { GRAFANA_PANELS, panelEmbedUrl } from '../lib/grafana';
 
-function PanelCard({ panel, cacheBust }) {
+function PanelCard({ panel }) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
-  const src = panelEmbedUrl(panel, cacheBust);
-
-  useEffect(() => {
-    setLoaded(false);
-    setFailed(false);
-  }, [cacheBust]);
+  const cacheBust = useRef(Date.now());
+  const src = panelEmbedUrl(panel, cacheBust.current);
 
   return (
     <div className="bg-card/70 border border-border rounded-2xl overflow-hidden shadow-md">
@@ -44,7 +40,6 @@ function PanelCard({ panel, cacheBust }) {
           </div>
         ) : (
           <iframe
-            key={cacheBust}
             src={src}
             title={panel.title}
             className="h-full w-full"
@@ -64,7 +59,6 @@ export default function LogsMonitoring() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastRefreshed, setLastRefreshed] = useState(null);
-  const [refreshKey, setRefreshKey] = useState(0);
 
   const sources = [
     { id: 'fwknop', label: 'fwknop SPA Daemon' },
@@ -127,17 +121,10 @@ export default function LogsMonitoring() {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-foreground">Grafana</h3>
-          <button
-            onClick={() => setRefreshKey(Date.now())}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-card hover:bg-muted text-foreground rounded-lg border border-border transition-all cursor-pointer"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            Reload Panels
-          </button>
         </div>
         <div className="grid gap-4">
           {GRAFANA_PANELS.map((p) => (
-            <PanelCard key={`${p.uid}-${p.panelId}`} panel={p} cacheBust={refreshKey} />
+            <PanelCard key={`${p.uid}-${p.panelId}`} panel={p} />
           ))}
         </div>
       </div>
