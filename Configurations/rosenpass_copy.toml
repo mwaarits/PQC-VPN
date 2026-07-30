@@ -1,0 +1,16 @@
+[lti]
+secret_key = /home/farrel/lti-keys/lti_rp_secret.key
+public_key = /home/farrel/lti-keys/lti_rp_public.key
+listen = ["0.0.0.0:9999"]
+
+#Bank A
+[[peers]]
+public_key = /home/farrel/lti-keys/bank_a_rp_public.key
+endpoint = "10.100.0.2:9999"
+wg_peer = v8VqNAasNJ8JuiwH3AUWryMUSuMCJxMlDvXSVqC4xXA=
+
+#Bank B
+[[peers]]
+public_key = /home/hengky/lti-keys/bank_b_rp_public.key
+endpoint   = "10.100.0.3:9999"
+wg_peer    = DIkdRGdNNRWu8CFqWNRKUc9lDI/G/KAH87BKeKN8ZXA=
